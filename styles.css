@@ -1,0 +1,96 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url(assets/Numerazzle.png);
+  background-size: cover;
+  user-select: none;
+}
+
+/* hier ist styles fur die main page */
+.menu {
+  width: 400px;
+  height: 400px;
+  border-radius: 25px;
+  background-color: #bfe9ff;
+  margin-top: 100px;
+}
+
+.menu h1 {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.menu a {
+  color: black;
+  border: solid 2px #191771;
+  font-size: 25px;
+  padding: 10px;
+  border-radius: 25px;
+  text-decoration: none;
+}
+
+.menu a:hover {
+  background-color: #191771;
+  color: white;
+}
+
+header {
+  width: 100%;
+  text-align: center;
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.container {
+  display: flex;
+  gap: 50px;
+  margin-top: 140px;
+  justify-content: center;
+  align-items: center;
+}
+
+.draggable-container {
+  display: grid;
+  grid-template-columns: repeat(5, 100px);
+  grid-template-rows: repeat(5, 100px);
+  gap: 5px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, 100px);
+  grid-template-rows: repeat(5, 100px);
+  gap: 5px;
+}
+
+.tile,
+.draggable {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  line-height: 100px;
+}
+
+.tile {
+  background-color: lightgray;
+  border: 2px solid black;
+}
+
+.draggable {
+  background-color: orange;
+  cursor: grab;
+}
+
+.equations {
+  margin: 0;
+}
+
+.setRound {
+  display: inline-block;
+}
