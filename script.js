@@ -1,8 +1,7 @@
-// script.js
-
 let currentSet = 1;
 let currentRound = 1;
 let score = 0;
+let totalScore = 0;
 let countdownTimer;
 let remainingTime;
 
@@ -143,14 +142,25 @@ function endRound() {
   if (currentRound <= roundsConfig.length) {
     setupRound(); // Set up the next round if rounds are remaining
   } else {
-    alert(`End of Set ${currentSet}. Starting next set.`);
-    resetGame(); // Reset game if all rounds are complete
+    currentSet++;
+    document.getElementById("currentSet").textContent = `Set ${currentSet}`;
+    if (currentSet > 5) {
+      // Hide both grids after the 5th set
+      document.querySelector(".grid-container").style.display = "none";
+      document.querySelector(".draggable-container").style.display = "none";
+      alert("Game Over! You've completed 5 sets.");
+    } else {
+      totalScore += score;
+      document.getElementById(
+        "totalScore"
+      ).textContent = `Total Score: ${totalScore}`; // Display total score
+      resetGame(); // Reset game if all rounds are complete
+    }
   }
 }
 
 // Reset the game after a set
 function resetGame() {
-  currentSet++;
   currentRound = 1;
   score = 0;
   setupRound();
@@ -188,7 +198,10 @@ function handleDrop(e) {
     checkRoundCompletion();
   } else {
     // Incorrect answer
-    score--;
+    if (score > 0) {
+      score--;
+    } else {
+    }
     draggedElement.style.visibility = "visible";
     alert("Incorrect answer, you lost a point!");
   }
@@ -222,18 +235,5 @@ function shuffleArray(array) {
 
 // Start the first round on page load
 document.addEventListener("DOMContentLoaded", () => {
-  const scoreBoard = document.createElement("div");
-  scoreBoard.id = "score";
-  scoreBoard.textContent = "Score: 0";
-  document.body.insertBefore(scoreBoard, document.querySelector(".container"));
-
-  const timerDisplay = document.createElement("div");
-  timerDisplay.id = "timer";
-  timerDisplay.textContent = "Time Left: 0";
-  document.body.insertBefore(
-    timerDisplay,
-    document.querySelector(".container")
-  );
-
   setupRound();
 });
