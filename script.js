@@ -81,7 +81,7 @@ function setupRound() {
   // Start the countdown timer
   startCountdown();
 
-  // set round
+  // Set round
   document.getElementById("setRound").textContent = `Round ${currentRound}`;
 }
 
@@ -113,8 +113,10 @@ function populateAnswers(answers) {
     box.textContent = answer;
     box.draggable = true;
     box.dataset.answer = answer;
-    box.addEventListener("dragstart", handleDragStart);
-    box.addEventListener("dragend", handleDragEnd);
+
+    // Add drag and drop listeners
+    addDragAndDropListeners(box);
+
     draggableContainer.appendChild(box);
   });
 }
@@ -169,6 +171,34 @@ function resetGame() {
 // Drag and Drop Functions
 let draggedElement = null;
 
+// Add event listeners for both mouse and touch events
+function addDragAndDropListeners(element) {
+  element.addEventListener("dragstart", handleDragStart);
+  element.addEventListener("dragend", handleDragEnd);
+
+  element.addEventListener("touchstart", handleTouchStart);
+  element.addEventListener("touchend", handleTouchEnd);
+}
+
+function handleTouchStart(e) {
+  e.preventDefault(); // Prevent default touch behavior
+  draggedElement = e.target; // Set dragged element
+  setTimeout(() => {
+    e.target.style.visibility = "hidden"; // Hide the dragged element
+  }, 0);
+}
+
+function handleTouchEnd(e) {
+  const touch = e.changedTouches[0];
+  const dropzone = document.elementFromPoint(touch.clientX, touch.clientY); // Get the dropzone
+
+  if (dropzone) {
+    handleDrop({ target: dropzone }); // Simulate the drop event
+  }
+
+  draggedElement.style.visibility = "visible"; // Show the dragged element again
+}
+
 function handleDragStart(e) {
   draggedElement = e.target;
   setTimeout(() => {
@@ -200,9 +230,7 @@ function handleDrop(e) {
     // Incorrect answer
     if (score > 0) {
       score--;
-    } else {
     }
-    draggedElement.style.visibility = "visible";
     alert("Incorrect answer, you lost a point!");
   }
 
