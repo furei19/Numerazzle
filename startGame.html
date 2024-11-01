@@ -7,23 +7,29 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header>
-      <h1>Numerazzle</h1>
-      <div class="stats" id="timer">Time Left: 000</div>
+    <div class="content">
+      <header>
+        <h1>Numerazzle</h1>
+        <div class="stats" id="timer">Time Left: 000</div>
+        <div class="stats" id="totalScore">Total Score: 00</div>
+        <!-- New element for set display -->
+      </header>
+      <center>
+        <div class="container">
+          <div class="draggable-container">
+            <!-- Draggable boxes (answers will be inserted here via JavaScript) -->
+          </div>
+          <div class="grid-container">
+            <!-- Equation tiles (equations will be inserted here via JavaScript) -->
+          </div>
+        </div>
+      </center>
+    </div>
+    <footer>
       <div class="stats" id="score">Score: 0</div>
       <div class="stats" id="setRound">Round 0</div>
       <div class="stats" id="currentSet">Set 1</div>
-      <div class="stats" id="totalScore">Total Score: 00</div>
-      <!-- New element for set display -->
-    </header>
-    <div class="container">
-      <div class="draggable-container">
-        <!-- Draggable boxes (answers will be inserted here via JavaScript) -->
-      </div>
-      <div class="grid-container">
-        <!-- Equation tiles (equations will be inserted here via JavaScript) -->
-      </div>
-    </div>
+    </footer>
     <script src="script.js"></script>
   </body>
 </html>

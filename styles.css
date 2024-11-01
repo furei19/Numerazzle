@@ -1,8 +1,10 @@
-body {
+body,
+html {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: url(assets/Numerazzle.png);
+  background: url(assets/Numerazzle.png) no-repeat center center fixed;
   background-size: cover;
   user-select: none;
 }
@@ -47,19 +49,38 @@ header {
   z-index: 1;
 }
 
+.content {
+  flex: 1;
+}
+
+footer {
+  height: 50px;
+  width: 100%;
+  text-align: center;
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+}
+
 .container {
   display: flex;
   gap: 50px;
   margin-top: 140px;
   justify-content: center;
   align-items: center;
+  margin-top: 200px;
 }
 
 .draggable-container {
   display: grid;
-  grid-template-columns: repeat(5, 100px);
-  grid-template-rows: repeat(5, 100px);
-  gap: 5px;
+  gap: 10px;
+  justify-content: center;
+  align-content: center;
 }
 
 .grid-container {
@@ -99,4 +120,112 @@ header {
   display: inline-block;
   margin-left: 100px;
   margin-right: 100px;
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    width: max-content;
+    padding: 0;
+    background: url(assets/Numerazzle.png) no-repeat center center fixed;
+    background-size: cover;
+    user-select: none;
+    overflow: hidden; /* Prevents scrolling */
+  }
+
+  /* hier ist styles fur die main page */
+  .menu {
+    width: 200px;
+    height: 200px;
+    border-radius: 25px;
+    background-color: #bfe9ff;
+    margin-top: 100px;
+  }
+
+  .menu h1 {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  .menu a {
+    color: black;
+    border: solid 2px #191771;
+    font-size: 25px;
+    padding: 10px;
+    border-radius: 25px;
+    text-decoration: none;
+  }
+
+  .menu a:hover {
+    background-color: #191771;
+    color: white;
+  }
+
+  header {
+    width: 100%;
+    text-align: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  .container {
+    display: block;
+    gap: 15px;
+    margin-top: 140px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .draggable-container {
+    display: grid;
+    gap: 10px;
+    justify-content: center;
+    align-content: center;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    grid-template-rows: repeat(5, 100px);
+    gap: 5px;
+  }
+
+  .tile,
+  .draggable {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 50px;
+  }
+
+  .tile {
+    background-color: lightgray;
+    border: 2px solid black;
+  }
+
+  .draggable {
+    background-color: orange;
+    cursor: grab;
+  }
+
+  .equations {
+    margin: 0;
+  }
+
+  .setRound {
+    display: inline-block;
+  }
+
+  .stats {
+    display: inline-block;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
 }

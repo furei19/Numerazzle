@@ -5,7 +5,6 @@ let totalScore = 0;
 let countdownTimer;
 let remainingTime;
 
-// Set configurations for each round
 const roundsConfig = [
   { gridSize: 2, time: 120, operation: "addition" },
   { gridSize: 2, time: 120, operation: "subtraction" },
@@ -14,7 +13,6 @@ const roundsConfig = [
   { gridSize: 5, time: 900, operation: "mixed" },
 ];
 
-// Function to generate equations based on the operation type
 function generateEquation(operation) {
   let num1, num2, answer;
   switch (operation) {
@@ -35,7 +33,7 @@ function generateEquation(operation) {
       return { equation: `${num1} * ${num2}`, answer };
     case "division":
       num1 = Math.floor(Math.random() * 10) + 1;
-      num2 = Math.floor(Math.random() * 9) + 1; // avoid zero
+      num2 = Math.floor(Math.random() * 9) + 1;
       answer = num1;
       return { equation: `${num1 * num2} / ${num2}`, answer };
     case "mixed":
@@ -51,16 +49,20 @@ function generateEquation(operation) {
   }
 }
 
-// Function to set up the round
 function setupRound() {
   const roundConfig = roundsConfig[currentRound - 1];
   const gridSize = roundConfig.gridSize;
   const operation = roundConfig.operation;
   remainingTime = roundConfig.time;
 
+  // Set grid layout for the draggable container based on gridSize
+  const draggableContainer = document.querySelector(".draggable-container");
+  draggableContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+  draggableContainer.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
+
   // Reset grid and draggable container
   document.querySelector(".grid-container").innerHTML = "";
-  document.querySelector(".draggable-container").innerHTML = "";
+  draggableContainer.innerHTML = "";
 
   // Generate equations and answers based on the grid size
   const equations = [];
@@ -85,7 +87,6 @@ function setupRound() {
   document.getElementById("setRound").textContent = `Round ${currentRound}`;
 }
 
-// Function to populate equations in the grid
 function populateEquations(equations, gridSize) {
   const gridContainer = document.querySelector(".grid-container");
   gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
@@ -103,7 +104,6 @@ function populateEquations(equations, gridSize) {
   });
 }
 
-// Function to populate draggable boxes with answers
 function populateAnswers(answers) {
   const draggableContainer = document.querySelector(".draggable-container");
   answers.forEach((answer, index) => {
@@ -113,22 +113,18 @@ function populateAnswers(answers) {
     box.textContent = answer;
     box.draggable = true;
     box.dataset.answer = answer;
-
-    // Add drag and drop listeners
-    addDragAndDropListeners(box);
-
+    box.addEventListener("dragstart", handleDragStart);
+    addTouchDragListeners(box);
     draggableContainer.appendChild(box);
   });
 }
 
-// Countdown timer
 function startCountdown() {
   const timerElement = document.getElementById("timer");
   clearInterval(countdownTimer);
   countdownTimer = setInterval(() => {
     remainingTime--;
     timerElement.textContent = `Time Left: ${remainingTime} seconds`;
-
     if (remainingTime <= 0) {
       clearInterval(countdownTimer);
       endRound();
@@ -136,18 +132,15 @@ function startCountdown() {
   }, 1000);
 }
 
-// End the current round and move to the next
 function endRound() {
-  clearInterval(countdownTimer); // Stop the timer for the current round
+  clearInterval(countdownTimer);
   currentRound++;
-
   if (currentRound <= roundsConfig.length) {
-    setupRound(); // Set up the next round if rounds are remaining
+    setupRound();
   } else {
     currentSet++;
     document.getElementById("currentSet").textContent = `Set ${currentSet}`;
     if (currentSet > 5) {
-      // Hide both grids after the 5th set
       document.querySelector(".grid-container").style.display = "none";
       document.querySelector(".draggable-container").style.display = "none";
       alert("Game Over! You've completed 5 sets.");
@@ -155,105 +148,110 @@ function endRound() {
       totalScore += score;
       document.getElementById(
         "totalScore"
-      ).textContent = `Total Score: ${totalScore}`; // Display total score
-      resetGame(); // Reset game if all rounds are complete
+      ).textContent = `Total Score: ${totalScore}`;
+      resetGame();
     }
   }
 }
 
-// Reset the game after a set
 function resetGame() {
   currentRound = 1;
   score = 0;
   setupRound();
 }
 
-// Drag and Drop Functions
 let draggedElement = null;
 
-// Add event listeners for both mouse and touch events
-function addDragAndDropListeners(element) {
-  element.addEventListener("dragstart", handleDragStart);
-  element.addEventListener("dragend", handleDragEnd);
-
+function addTouchDragListeners(element) {
   element.addEventListener("touchstart", handleTouchStart);
+  element.addEventListener("touchmove", handleTouchMove);
   element.addEventListener("touchend", handleTouchEnd);
 }
 
 function handleTouchStart(e) {
-  e.preventDefault(); // Prevent default touch behavior
-  draggedElement = e.target; // Set dragged element
-  setTimeout(() => {
-    e.target.style.visibility = "hidden"; // Hide the dragged element
-  }, 0);
+  e.preventDefault();
+  draggedElement = e.target;
+  draggedElement.style.position = "absolute";
+  draggedElement.style.zIndex = 1000;
+  moveAt(e.touches[0]);
+}
+
+function handleTouchMove(e) {
+  if (!draggedElement) return;
+  moveAt(e.touches[0]);
+}
+
+function moveAt(touch) {
+  draggedElement.style.left =
+    touch.clientX - draggedElement.offsetWidth / 2 + "px";
+  draggedElement.style.top =
+    touch.clientY - draggedElement.offsetHeight / 2 + "px";
 }
 
 function handleTouchEnd(e) {
-  const touch = e.changedTouches[0];
-  const dropzone = document.elementFromPoint(touch.clientX, touch.clientY); // Get the dropzone
+  if (!draggedElement) return;
 
-  if (dropzone) {
-    handleDrop({ target: dropzone }); // Simulate the drop event
+  const touch = e.changedTouches[0];
+  const dropzone = document.elementFromPoint(touch.clientX, touch.clientY);
+
+  // Only proceed if the drop zone is a tile
+  if (dropzone && dropzone.classList.contains("tile")) {
+    const targetAnswer = parseInt(dropzone.dataset.answer);
+    const draggedAnswer = parseInt(draggedElement.dataset.answer);
+
+    if (targetAnswer === draggedAnswer) {
+      dropzone.textContent = draggedElement.textContent;
+      dropzone.style.backgroundColor = "lightgreen";
+      draggedElement.style.display = "none";
+      score++;
+      checkRoundCompletion();
+    } else {
+      if (score > 0) score--;
+      alert("Incorrect answer, you lost a point!");
+    }
+    document.getElementById("score").textContent = `Score: ${score}`;
   }
 
-  draggedElement.style.visibility = "visible"; // Show the dragged element again
+  // Reset the dragged element position and zIndex
+  draggedElement.style.position = "";
+  draggedElement.style.zIndex = "";
+  draggedElement = null;
 }
 
 function handleDragStart(e) {
   draggedElement = e.target;
-  setTimeout(() => {
-    e.target.style.visibility = "hidden";
-  }, 0);
-}
-
-function handleDragEnd(e) {
-  e.target.style.visibility = "visible";
 }
 
 function handleDragOver(e) {
-  e.preventDefault(); // Allows drop
+  e.preventDefault();
 }
 
 function handleDrop(e) {
-  e.preventDefault();
   const targetAnswer = parseInt(e.target.dataset.answer);
   const draggedAnswer = parseInt(draggedElement.dataset.answer);
 
   if (targetAnswer === draggedAnswer) {
-    // Correct answer
     e.target.textContent = draggedElement.textContent;
     e.target.style.backgroundColor = "lightgreen";
-    draggedElement.style.display = "none"; // Hide the box
+    draggedElement.style.display = "none";
     score++;
     checkRoundCompletion();
   } else {
-    // Incorrect answer
-    if (score > 0) {
-      score--;
-    }
+    if (score > 0) score--;
     alert("Incorrect answer, you lost a point!");
   }
-
-  // Update score display
   document.getElementById("score").textContent = `Score: ${score}`;
 }
 
-// Check if all answers are correct to finish the round
 function checkRoundCompletion() {
   const tiles = document.querySelectorAll(".grid-container .tile");
-
-  // Check if every tile has a correct answer (no empty tiles)
   const allCorrect = Array.from(tiles).every(
     (tile) =>
       tile.textContent !== "" && tile.style.backgroundColor === "lightgreen"
   );
-
-  if (allCorrect) {
-    endRound(); // Only advance to the next round if all answers are correct
-  }
+  if (allCorrect) endRound();
 }
 
-// Shuffle array helper function
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -261,7 +259,6 @@ function shuffleArray(array) {
   }
 }
 
-// Start the first round on page load
 document.addEventListener("DOMContentLoaded", () => {
   setupRound();
 });
