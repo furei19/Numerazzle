@@ -194,20 +194,48 @@ function handleTouchEnd(e) {
     if (targetAnswer === draggedAnswer) {
       dropzone.textContent = draggedElement.textContent;
       dropzone.style.backgroundColor = "lightgreen";
-      draggedElement.style.display = "none";
+      draggedElement.style.display = "none"; // Make the dragged element disappear
       score++;
       checkRoundCompletion();
     } else {
       if (score > 0) score--;
       alert("Incorrect answer, you lost a point!");
     }
-    document.getElementById("score").textContent = `Score: ${score}`;
+  } else {
+    // If not dropped on a valid tile, revert to original position
+    draggedElement.style.position = "";
+    draggedElement.style.zIndex = "";
+    draggedElement.style.border = ""; // Reset visual feedback
   }
 
-  draggedElement.style.position = "";
-  draggedElement.style.zIndex = "";
-  draggedElement.style.border = ""; // Reset visual feedback
+  document.getElementById("score").textContent = `Score: ${score}`;
   draggedElement = null;
+}
+
+function handleDragOver(e) {
+  e.preventDefault(); // Prevent default to allow drop
+}
+
+function handleDrop(e) {
+  e.preventDefault(); // Prevent default behavior for drop event
+
+  if (!draggedElement) return; // Ensure there is a dragged element
+
+  const targetAnswer = parseInt(e.target.dataset.answer);
+  const draggedAnswer = parseInt(draggedElement.dataset.answer);
+
+  if (targetAnswer === draggedAnswer) {
+    e.target.textContent = draggedElement.textContent;
+    e.target.style.backgroundColor = "lightgreen";
+    draggedElement.style.display = "none"; // Make the dragged element disappear
+    score++;
+    checkRoundCompletion();
+  } else {
+    if (score > 0) score--;
+    alert("Incorrect answer, you lost a point!");
+  }
+
+  document.getElementById("score").textContent = `Score: ${score}`;
 }
 
 function handleDragStart(e) {
