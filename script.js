@@ -55,16 +55,13 @@ function setupRound() {
   const operation = roundConfig.operation;
   remainingTime = roundConfig.time;
 
-  // Set grid layout for the draggable container based on gridSize
   const draggableContainer = document.querySelector(".draggable-container");
   draggableContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
   draggableContainer.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
 
-  // Reset grid and draggable container
   document.querySelector(".grid-container").innerHTML = "";
   draggableContainer.innerHTML = "";
 
-  // Generate equations and answers based on the grid size
   const equations = [];
   const answers = [];
   for (let i = 0; i < gridSize * gridSize; i++) {
@@ -73,17 +70,11 @@ function setupRound() {
     answers.push(answer);
   }
 
-  // Shuffle answers for draggable boxes
   shuffleArray(answers);
-
-  // Populate grid and draggable boxes
   populateEquations(equations, gridSize);
   populateAnswers(answers);
 
-  // Start the countdown timer
   startCountdown();
-
-  // Set round
   document.getElementById("setRound").textContent = `Round ${currentRound}`;
 }
 
@@ -163,9 +154,9 @@ function resetGame() {
 let draggedElement = null;
 
 function addTouchDragListeners(element) {
-  element.addEventListener("touchstart", handleTouchStart);
-  element.addEventListener("touchmove", handleTouchMove);
-  element.addEventListener("touchend", handleTouchEnd);
+  element.addEventListener("touchstart", handleTouchStart, { passive: false });
+  element.addEventListener("touchmove", handleTouchMove, { passive: false });
+  element.addEventListener("touchend", handleTouchEnd, { passive: false });
 }
 
 function handleTouchStart(e) {
@@ -173,10 +164,12 @@ function handleTouchStart(e) {
   draggedElement = e.target;
   draggedElement.style.position = "absolute";
   draggedElement.style.zIndex = 1000;
+  draggedElement.style.border = "2px solid blue"; // Visual feedback
   moveAt(e.touches[0]);
 }
 
 function handleTouchMove(e) {
+  e.preventDefault();
   if (!draggedElement) return;
   moveAt(e.touches[0]);
 }
@@ -194,7 +187,6 @@ function handleTouchEnd(e) {
   const touch = e.changedTouches[0];
   const dropzone = document.elementFromPoint(touch.clientX, touch.clientY);
 
-  // Only proceed if the drop zone is a tile
   if (dropzone && dropzone.classList.contains("tile")) {
     const targetAnswer = parseInt(dropzone.dataset.answer);
     const draggedAnswer = parseInt(draggedElement.dataset.answer);
@@ -212,9 +204,9 @@ function handleTouchEnd(e) {
     document.getElementById("score").textContent = `Score: ${score}`;
   }
 
-  // Reset the dragged element position and zIndex
   draggedElement.style.position = "";
   draggedElement.style.zIndex = "";
+  draggedElement.style.border = ""; // Reset visual feedback
   draggedElement = null;
 }
 
