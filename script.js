@@ -1,113 +1,323 @@
-let currentSet = 1;
 let currentRound = 1;
 let score = 0;
-let totalScore = 0;
+let totalScoreCounter = document.getElementById("totalScore");
 let countdownTimer;
 let remainingTime;
+let answeredQuestion = 0;
+let lastClickedElement = null;
+let set = 1;
+let totalTotalScore = document.getElementById("totalTotalScore");
+let setScore;
 
-const roundsConfig = [
-  { gridSize: 2, time: 120, operation: "addition" },
-  { gridSize: 2, time: 120, operation: "subtraction" },
-  { gridSize: 3, time: 300, operation: "multiplication" },
-  { gridSize: 3, time: 300, operation: "division" },
-  { gridSize: 5, time: 900, operation: "mixed" },
-];
+window.onload = generateEquationRound1();
 
-function generateEquation(operation) {
-  let num1, num2, answer;
-  switch (operation) {
-    case "addition":
-      num1 = Math.floor(Math.random() * 10) + 1;
-      num2 = Math.floor(Math.random() * 10) + 1;
-      answer = num1 + num2;
-      return { equation: `${num1} + ${num2}`, answer };
-    case "subtraction":
-      num1 = Math.floor(Math.random() * 20) + 1;
-      num2 = Math.floor(Math.random() * 10) + 1;
-      answer = num1 - num2;
-      return { equation: `${num1} - ${num2}`, answer };
-    case "multiplication":
-      num1 = Math.floor(Math.random() * 10) + 1;
-      num2 = Math.floor(Math.random() * 10) + 1;
-      answer = num1 * num2;
-      return { equation: `${num1} * ${num2}`, answer };
-    case "division":
-      num1 = Math.floor(Math.random() * 10) + 1;
-      num2 = Math.floor(Math.random() * 9) + 1;
-      answer = num1;
-      return { equation: `${num1 * num2} / ${num2}`, answer };
-    case "mixed":
-      const operations = [
-        "addition",
-        "subtraction",
-        "multiplication",
-        "division",
-      ];
-      return generateEquation(
-        operations[Math.floor(Math.random() * operations.length)]
-      );
-  }
-}
+function generateEquationRound1() {
+  currentRound = 1;
 
-function setupRound() {
-  const roundConfig = roundsConfig[currentRound - 1];
-  const gridSize = roundConfig.gridSize;
-  const operation = roundConfig.operation;
-  remainingTime = roundConfig.time;
-
-  const draggableContainer = document.querySelector(".draggable-container");
-  draggableContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
-  draggableContainer.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
-
-  document.querySelector(".grid-container").innerHTML = "";
-  draggableContainer.innerHTML = "";
-
-  const equations = [];
+  document.getElementById("setRound").textContent = `Round: 1`;
+  document.getElementById("round1A").style.display = "grid";
+  document.getElementById("round1Q").style.display = "grid";
+  const questions = [];
   const answers = [];
-  for (let i = 0; i < gridSize * gridSize; i++) {
-    const { equation, answer } = generateEquation(operation);
-    equations.push(equation);
-    answers.push(answer);
+
+  for (let row = 1; row <= 2; row++) {
+    for (let col = 1; col <= 2; col++) {
+      let num1 = Math.floor(Math.random() * 10) + 1;
+      let num2 = Math.floor(Math.random() * 10) + 1;
+      let answer = num1 + num2;
+
+      const questionKey = `round1q-${row}-${col}`;
+      questions.push({
+        key: questionKey,
+        text: `${num1} + ${num2}`,
+        answer: answer,
+      });
+      answers.push(answer);
+    }
   }
 
   shuffleArray(answers);
-  populateEquations(equations, gridSize);
-  populateAnswers(answers);
 
+  for (let row = 1; row <= 2; row++) {
+    for (let col = 1; col <= 2; col++) {
+      const answerElement = document.getElementById(`round1-${row}-${col}`);
+      answerElement.textContent = answers.pop();
+    }
+  }
+
+  questions.forEach((q) => {
+    const questionElement = document.getElementById(q.key);
+    questionElement.textContent = q.text;
+    questionElement.setAttribute("data-answer", q.answer);
+  });
+
+  remainingTime = 120;
   startCountdown();
-  document.getElementById("setRound").textContent = `Round ${currentRound}`;
 }
 
-function populateEquations(equations, gridSize) {
-  const gridContainer = document.querySelector(".grid-container");
-  gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
-  gridContainer.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
+function generateEquationRound2() {
+  currentRound = 2;
+  document.getElementById("setRound").textContent = `Round: 2`;
+  document.getElementById("round1A").style.display = "none";
+  document.getElementById("round1Q").style.display = "none";
+  document.getElementById("round2A").style.display = "grid";
+  document.getElementById("round2Q").style.display = "grid";
 
-  equations.forEach((equation, index) => {
-    const tile = document.createElement("div");
-    tile.className = "tile";
-    tile.id = `tile${index}`;
-    tile.textContent = equation;
-    tile.dataset.answer = eval(equation);
-    tile.addEventListener("dragover", handleDragOver);
-    tile.addEventListener("drop", handleDrop);
-    gridContainer.appendChild(tile);
+  const questions = [];
+  const answers = [];
+
+  for (let row = 1; row <= 2; row++) {
+    for (let col = 1; col <= 2; col++) {
+      let num1 = Math.floor(Math.random() * 10) + 1;
+      let num2 = Math.floor(Math.random() * 10) + 1;
+      let answer = num1 - num2;
+
+      const questionKey = `round2q-${row}-${col}`;
+      questions.push({
+        key: questionKey,
+        text: `${num1} - ${num2}`,
+        answer: answer,
+      });
+      answers.push(answer);
+    }
+  }
+
+  shuffleArray(answers);
+
+  for (let row = 1; row <= 2; row++) {
+    for (let col = 1; col <= 2; col++) {
+      const answerElement = document.getElementById(`round2-${row}-${col}`);
+      answerElement.textContent = answers.pop();
+    }
+  }
+
+  questions.forEach((q) => {
+    const questionElement = document.getElementById(q.key);
+    questionElement.textContent = q.text;
+    questionElement.setAttribute("data-answer", q.answer);
   });
+
+  remainingTime = 120;
+  startCountdown();
 }
 
-function populateAnswers(answers) {
-  const draggableContainer = document.querySelector(".draggable-container");
-  answers.forEach((answer, index) => {
-    const box = document.createElement("div");
-    box.className = "draggable";
-    box.id = `box${index}`;
-    box.textContent = answer;
-    box.draggable = true;
-    box.dataset.answer = answer;
-    box.addEventListener("dragstart", handleDragStart);
-    addTouchDragListeners(box);
-    draggableContainer.appendChild(box);
+function generateEquationRound3() {
+  currentRound = 3;
+  document.getElementById("setRound").textContent = `Round: 3`;
+  document.getElementById("round2A").style.display = "none";
+  document.getElementById("round2Q").style.display = "none";
+  document.getElementById("round3A").style.display = "grid";
+  document.getElementById("round3Q").style.display = "grid";
+
+  const questions = [];
+  const answers = [];
+
+  for (let row = 1; row <= 3; row++) {
+    for (let col = 1; col <= 3; col++) {
+      let num1 = Math.floor(Math.random() * 10) + 1;
+      let num2 = Math.floor(Math.random() * 10) + 1;
+      let answer = num1 * num2;
+
+      const questionKey = `round3q-${row}-${col}`;
+      questions.push({
+        key: questionKey,
+        text: `${num1} * ${num2}`,
+        answer: answer,
+      });
+      answers.push(answer);
+    }
+  }
+
+  shuffleArray(answers);
+
+  for (let row = 1; row <= 3; row++) {
+    for (let col = 1; col <= 3; col++) {
+      const answerElement = document.getElementById(`round3-${row}-${col}`);
+      answerElement.textContent = answers.pop();
+    }
+  }
+
+  questions.forEach((q) => {
+    const questionElement = document.getElementById(q.key);
+    questionElement.textContent = q.text;
+    questionElement.setAttribute("data-answer", q.answer);
   });
+
+  remainingTime = 360;
+  startCountdown();
+}
+
+function generateEquationRound4() {
+  currentRound = 4;
+  document.getElementById("setRound").textContent = `Round: 4`;
+  document.getElementById("round3A").style.display = "none";
+  document.getElementById("round3Q").style.display = "none";
+  document.getElementById("round4A").style.display = "grid";
+  document.getElementById("round4Q").style.display = "grid";
+
+  const questions = [];
+  const answers = [];
+
+  for (let row = 1; row <= 3; row++) {
+    for (let col = 1; col <= 3; col++) {
+      let num1 = Math.floor(Math.random() * 10) + 1;
+      let num2 = Math.floor(Math.random() * 10) + 1;
+      let answer = parseFloat((num1 / num2).toFixed(2));
+
+      const questionKey = `round4q-${row}-${col}`;
+      questions.push({
+        key: questionKey,
+        text: `${num1} / ${num2}`,
+        answer: answer,
+      });
+      answers.push(answer);
+    }
+  }
+
+  shuffleArray(answers);
+
+  for (let row = 1; row <= 3; row++) {
+    for (let col = 1; col <= 3; col++) {
+      const answerElement = document.getElementById(`round4-${row}-${col}`);
+      answerElement.textContent = answers.pop();
+    }
+  }
+
+  questions.forEach((q) => {
+    const questionElement = document.getElementById(q.key);
+    questionElement.textContent = q.text;
+    questionElement.setAttribute("data-answer", q.answer);
+  });
+
+  remainingTime = 360;
+  startCountdown();
+}
+
+function generateEquationRound5() {
+  currentRound = 5;
+  document.getElementById("setRound").textContent = `Round: 5`;
+  document.getElementById("round1A").style.display = "none";
+  document.getElementById("round1Q").style.display = "none";
+  document.getElementById("round4A").style.display = "none";
+  document.getElementById("round4Q").style.display = "none";
+  document.getElementById("round5A").style.display = "grid";
+  document.getElementById("round5Q").style.display = "grid";
+
+  const questions = [];
+  const answers = [];
+
+  for (let row = 1; row <= 5; row++) {
+    for (let col = 1; col <= 5; col++) {
+      let num1 = Math.floor(Math.random() * 10) + 1;
+      let num2 = Math.floor(Math.random() * 10) + 1;
+      let answer;
+      let operator;
+
+      const operatorChoice = Math.floor(Math.random() * 4);
+      switch (operatorChoice) {
+        case 0:
+          operator = "+";
+          answer = num1 + num2;
+          break;
+        case 1:
+          operator = "-";
+          answer = num1 - num2;
+          break;
+        case 2:
+          operator = "*";
+          answer = num1 * num2;
+          break;
+        case 3:
+          operator = "/";
+          answer = parseFloat((num1 / num2).toFixed(2));
+          questionText = `${num1} / ${num2} = ${(num1 / num2).toFixed(2)}`;
+          break;
+      }
+
+      const questionKey = `round5q-${row}-${col}`;
+      questions.push({
+        key: questionKey,
+        text: `${num1} ${operator} ${num2}`,
+        answer: answer,
+      });
+      answers.push(answer);
+    }
+  }
+
+  shuffleArray(answers);
+
+  for (let row = 1; row <= 5; row++) {
+    for (let col = 1; col <= 5; col++) {
+      const answerElement = document.getElementById(`round5-${row}-${col}`);
+      answerElement.textContent = answers.pop();
+    }
+  }
+
+  questions.forEach((q) => {
+    const questionElement = document.getElementById(q.key);
+    questionElement.textContent = q.text;
+    questionElement.setAttribute("data-answer", q.answer);
+  });
+
+  remainingTime = 900;
+  startCountdown();
+}
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+function getAnswer(element) {
+  clickedAnswer = element;
+  if (lastClickedElement && lastClickedElement !== element) {
+    lastClickedElement.style.backgroundColor = "";
+    lastClickedElement.style.color = "";
+  }
+
+  element.style.backgroundColor = "lightgreen";
+  lastClickedElement = element;
+
+}
+
+function checkAnswer(element) {
+  clickedQuestion = element;
+  if (clickedQuestion && clickedAnswer) {
+    let correctAnswer = clickedQuestion.getAttribute("data-answer");
+    if (clickedAnswer.textContent === correctAnswer) {
+      score++;
+      answeredQuestion++;
+      clickedQuestion.style.backgroundColor = "lightgreen";
+      clickedAnswer.style.display = "none";
+      totalScoreCounter.textContent = `Total Score = ${score}`;
+      if (answeredQuestion === 4) {
+        document.getElementById("setRound").textContent = `Round: 2`;
+        generateEquationRound2();
+      } else if (answeredQuestion === 8) {
+        document.getElementById("setRound").textContent = `Round: 3`;
+        generateEquationRound3();
+      } else if (answeredQuestion === 17) {
+        document.getElementById("setRound").textContent = `Round: 4`;
+        generateEquationRound4();
+      } else if (answeredQuestion === 26) {
+        document.getElementById("setRound").textContent = `Round: 5`;
+        generateEquationRound5();
+        console.log("answered questions", answeredQuestion);
+      } else if (answeredQuestion === 51) {
+        nextSet();
+      }
+    } else {
+      alert("Incorrect answer, score -1");
+      score--;
+      lastClickedElement.style.backgroundColor = "";
+      lastClickedElement.style.color = "";
+      totalScoreCounter.textContent = `Total Score = ${score}`;
+    }
+    clickedQuestion = null;
+    clickedAnswer = null;
+  }
 }
 
 function startCountdown() {
@@ -123,162 +333,27 @@ function startCountdown() {
   }, 1000);
 }
 
+function nextSet() {
+  document.getElementById("round5A").style.display = "none";
+  document.getElementById("round5Q").style.display = "none";
+  document.getElementById("roundEnd").style.display = "block";
+  totalTotalScore.textContent = `Total Score = ${setScore}`;
+}
+
 function endRound() {
-  clearInterval(countdownTimer);
-  currentRound++;
-  if (currentRound <= roundsConfig.length) {
-    setupRound();
-  } else {
-    currentSet++;
-    document.getElementById("currentSet").textContent = `Set ${currentSet}`;
-    if (currentSet > 5) {
-      document.querySelector(".grid-container").style.display = "none";
-      document.querySelector(".draggable-container").style.display = "none";
-      alert("Game Over! You've completed 5 sets.");
-    } else {
-      totalScore += score;
-      document.getElementById(
-        "totalScore"
-      ).textContent = `Total Score: ${totalScore}`;
-      resetGame();
-    }
+  if (currentRound === 1) {
+    generateEquationRound2();
+  } else if (currentRound === 2) {
+    generateEquationRound3();
+  } else if (currentRound === 3) {
+    generateEquationRound4();
+  } else if (currentRound === 4) {
+    generateEquationRound5();
+  } else if (currentRound === 5) {
+    nextSet();
   }
 }
 
-function resetGame() {
-  currentRound = 1;
-  score = 0;
-  setupRound();
+function nextGame() {
+  location.reload(true);
 }
-
-let draggedElement = null;
-
-function addTouchDragListeners(element) {
-  element.addEventListener("touchstart", handleTouchStart, { passive: false });
-  element.addEventListener("touchmove", handleTouchMove, { passive: false });
-  element.addEventListener("touchend", handleTouchEnd, { passive: false });
-}
-
-function handleTouchStart(e) {
-  e.preventDefault();
-  draggedElement = e.target;
-  draggedElement.style.position = "absolute";
-  draggedElement.style.zIndex = 1000;
-  draggedElement.style.border = "2px solid blue"; // Visual feedback
-  moveAt(e.touches[0]);
-}
-
-function handleTouchMove(e) {
-  e.preventDefault();
-  if (!draggedElement) return;
-  moveAt(e.touches[0]);
-}
-
-function moveAt(touch) {
-  draggedElement.style.left =
-    touch.clientX - draggedElement.offsetWidth / 2 + "px";
-  draggedElement.style.top =
-    touch.clientY - draggedElement.offsetHeight / 2 + "px";
-}
-
-function handleTouchEnd(e) {
-  if (!draggedElement) return;
-
-  const touch = e.changedTouches[0];
-  const dropzone = document.elementFromPoint(touch.clientX, touch.clientY);
-
-  if (dropzone && dropzone.classList.contains("tile")) {
-    const targetAnswer = parseInt(dropzone.dataset.answer);
-    const draggedAnswer = parseInt(draggedElement.dataset.answer);
-
-    if (targetAnswer === draggedAnswer) {
-      dropzone.textContent = draggedElement.textContent;
-      dropzone.style.backgroundColor = "lightgreen";
-      draggedElement.style.display = "none"; // Make the dragged element disappear
-      score++;
-      checkRoundCompletion();
-    } else {
-      if (score > 0) score--;
-      alert("Incorrect answer, you lost a point!");
-    }
-  } else {
-    // If not dropped on a valid tile, revert to original position
-    draggedElement.style.position = "";
-    draggedElement.style.zIndex = "";
-    draggedElement.style.border = ""; // Reset visual feedback
-  }
-
-  document.getElementById("score").textContent = `Score: ${score}`;
-  draggedElement = null;
-}
-
-function handleDragOver(e) {
-  e.preventDefault(); // Prevent default to allow drop
-}
-
-function handleDrop(e) {
-  e.preventDefault(); // Prevent default behavior for drop event
-
-  if (!draggedElement) return; // Ensure there is a dragged element
-
-  const targetAnswer = parseInt(e.target.dataset.answer);
-  const draggedAnswer = parseInt(draggedElement.dataset.answer);
-
-  if (targetAnswer === draggedAnswer) {
-    e.target.textContent = draggedElement.textContent;
-    e.target.style.backgroundColor = "lightgreen";
-    draggedElement.style.display = "none"; // Make the dragged element disappear
-    score++;
-    checkRoundCompletion();
-  } else {
-    if (score > 0) score--;
-    alert("Incorrect answer, you lost a point!");
-  }
-
-  document.getElementById("score").textContent = `Score: ${score}`;
-}
-
-function handleDragStart(e) {
-  draggedElement = e.target;
-}
-
-function handleDragOver(e) {
-  e.preventDefault();
-}
-
-function handleDrop(e) {
-  const targetAnswer = parseInt(e.target.dataset.answer);
-  const draggedAnswer = parseInt(draggedElement.dataset.answer);
-
-  if (targetAnswer === draggedAnswer) {
-    e.target.textContent = draggedElement.textContent;
-    e.target.style.backgroundColor = "lightgreen";
-    draggedElement.style.display = "none";
-    score++;
-    checkRoundCompletion();
-  } else {
-    if (score > 0) score--;
-    alert("Incorrect answer, you lost a point!");
-  }
-  document.getElementById("score").textContent = `Score: ${score}`;
-}
-
-function checkRoundCompletion() {
-  const tiles = document.querySelectorAll(".grid-container .tile");
-  const allCorrect = Array.from(tiles).every(
-    (tile) =>
-      tile.textContent !== "" && tile.style.backgroundColor === "lightgreen"
-  );
-  if (allCorrect) endRound();
-}
-
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  setupRound();
-});

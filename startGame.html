@@ -1,35 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Numerazzle</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="content">
-      <header>
-        <h1>Numerazzle</h1>
-        <div class="stats" id="timer">Time Left: 000</div>
-        <div class="stats" id="totalScore">Total Score: 00</div>
-        <!-- New element for set display -->
-      </header>
-      <center>
-        <div class="container">
-          <div class="draggable-container">
-            <!-- Draggable boxes (answers will be inserted here via JavaScript) -->
-          </div>
-          <div class="grid-container">
-            <!-- Equation tiles (equations will be inserted here via JavaScript) -->
-          </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Numerazzle</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="content">
+    <header id="header">
+      <h1>Numerazzle</h1>
+      <div class="stats" id="timer">Time Left: 000 Seconds</div>
+      <div class="stats" id="totalScore">Total Score: 00</div>
+      <!--
+      <button onclick="generateEquationRound5()">skip to round 5</button>
+      <button onclick="nextSet()">skip to end</button>
+      -->
+    </header>
+    <center>
+      <div class="roundEnd" id="roundEnd">
+        <h1>GAME OVER</h1>
+        <h1 class="stats" id="totalTotalScore">Total Score: 00</h1>
+        <h2 onclick="nextGame()">Next Set</h2>
+      </div>
+    </center>
+    <center>
+      <div class="container" id="container">
+
+        <!-- round 1 and 2 -->
+        <div class="question-container-1" id="round1Q">
+          <p class="question" id="round1q-1-1" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round1q-2-1" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round1q-1-2" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round1q-2-2" onclick="checkAnswer(this)"></p>
         </div>
-      </center>
-    </div>
-    <footer>
-      <div class="stats" id="score">Score: 0</div>
-      <div class="stats" id="setRound">Round 0</div>
-      <div class="stats" id="currentSet">Set 1</div>
-    </footer>
-    <script src="script.js"></script>
-  </body>
+        <div class="answer-container-1" id="round1A">
+          <p class="answer" id="round1-1-1" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round1-2-1" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round1-1-2" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round1-2-2" onclick="getAnswer(this)"></p>
+        </div>
+        <div class="question-container-2" id="round2Q">
+          <p class="question" id="round2q-1-1" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round2q-2-1" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round2q-1-2" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round2q-2-2" onclick="checkAnswer(this)"></p>
+        </div>
+        <div class="answer-container-2" id="round2A">
+          <p class="answer" id="round2-1-1" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round2-2-1" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round2-1-2" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round2-2-2" onclick="getAnswer(this)"></p>
+        </div>
+        <!-- round 3 and 4 -->
+
+        <div class="question-container-3" id="round3Q">
+          <p class="question" id="round3q-1-1" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round3q-2-1" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round3q-3-1" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round3q-1-2" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round3q-2-2" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round3q-3-2" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round3q-1-3" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round3q-2-3" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round3q-3-3" onclick="checkAnswer(this)"></p>
+        </div>
+        <div class="answer-container-3" id="round3A">
+          <p class="answer" id="round3-1-1" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round3-2-1" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round3-3-1" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round3-1-2" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round3-2-2" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round3-3-2" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round3-1-3" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round3-2-3" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round3-3-3" onclick="getAnswer(this)"></p>
+        </div>
+
+        <div class="question-container-3" id="round4Q">
+          <p class="question" id="round4q-1-1" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round4q-2-1" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round4q-3-1" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round4q-1-2" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round4q-2-2" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round4q-3-2" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round4q-1-3" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round4q-2-3" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round4q-3-3" onclick="checkAnswer(this)"></p>
+        </div>
+        <div class="answer-container-4" id="round4A">
+          <p class="answer" id="round4-1-1" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round4-2-1" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round4-3-1" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round4-1-2" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round4-2-2" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round4-3-2" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round4-1-3" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round4-2-3" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round4-3-3" onclick="getAnswer(this)"></p>
+        </div>
+        <!-- round 5 -->
+
+        <div class="question-container-5" id="round5Q">
+          <p class="question" id="round5q-1-1" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-2-1" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-3-1" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-4-1" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-5-1" onclick="checkAnswer(this)"></p>
+
+          <p class="question" id="round5q-1-2" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-2-2" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-3-2" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-4-2" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-5-2" onclick="checkAnswer(this)"></p>
+
+          <p class="question" id="round5q-1-3" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-2-3" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-3-3" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-4-3" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-5-3" onclick="checkAnswer(this)"></p>
+
+          <p class="question" id="round5q-1-4" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-2-4" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-3-4" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-4-4" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-5-4" onclick="checkAnswer(this)"></p>
+
+          <p class="question" id="round5q-1-5" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-2-5" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-3-5" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-4-5" onclick="checkAnswer(this)"></p>
+          <p class="question" id="round5q-5-5" onclick="checkAnswer(this)"></p>
+        </div>
+        <div class="answer-container-5" id="round5A">
+          <p class="answer" id="round5-1-1" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-2-1" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-3-1" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-4-1" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-5-1" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-1-2" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-2-2" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-3-2" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-4-2" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-5-2" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-1-3" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-2-3" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-3-3" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-4-3" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-5-3" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-1-4" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-2-4" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-3-4" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-4-4" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-5-4" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-1-5" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-2-5" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-3-5" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-4-5" onclick="getAnswer(this)"></p>
+          <p class="answer" id="round5-5-5" onclick="getAnswer(this)"></p>
+        </div>
+      </div>
+    </center>
+  </div>
+  <footer id="footer">
+    <div class="statsFooter" id="setRound">Round 0</div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+
 </html>

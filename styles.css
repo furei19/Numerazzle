@@ -38,6 +38,7 @@ html {
 }
 
 header {
+  display: block;
   width: 100%;
   text-align: center;
   background-color: #333;
@@ -49,11 +50,37 @@ header {
   z-index: 1;
 }
 
+.roundEnd {
+  display: none;
+  background-color: black;
+  color: white;
+  margin-top: 200px;
+  width: 500px;
+  height: 450px;
+}
+
+.roundEnd h1 {
+  padding-top: 50px;
+}
+
+.roundEnd h2 {
+  padding: 5px;
+  border: 2px solid white;
+  width: 150px;
+  border-radius: 25px;
+}
+
+.roundEnd h2:hover {
+  color: black;
+  background-color: white;
+}
+
 .content {
   flex: 1;
 }
 
 footer {
+  display: block;
   height: 50px;
   width: 100%;
   text-align: center;
@@ -68,55 +95,85 @@ footer {
 }
 
 .container {
-  display: flex;
+  display: flex; /*set to flex*/
   gap: 50px;
-  margin-top: 140px;
   justify-content: center;
   align-items: center;
   margin-top: 200px;
 }
 
-.draggable-container {
+.answer-container-1,
+.question-container-1 {
   display: grid;
   gap: 10px;
+  grid-template-columns: repeat(2, 100px);
+  grid-template-rows: repeat(2, 100px);
   justify-content: center;
   align-content: center;
 }
 
-.grid-container {
-  display: grid;
+.answer-container-2,
+.question-container-2 {
+  display: none;
+  gap: 10px;
+  grid-template-columns: repeat(2, 100px);
+  grid-template-rows: repeat(2, 100px);
+  justify-content: center;
+  align-content: center;
+}
+
+.question-container-3,
+.answer-container-3 {
+  display: none;
+  gap: 10px;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  justify-content: center;
+  align-content: center;
+}
+
+.question-container-4,
+.answer-container-4 {
+  display: none;
+  gap: 10px;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  justify-content: center;
+  align-content: center;
+}
+
+.question-container-5,
+.answer-container-5 {
+  display: none;
+  margin-top: -70px;
+  gap: 5px;
   grid-template-columns: repeat(5, 100px);
   grid-template-rows: repeat(5, 100px);
-  gap: 5px;
+  justify-content: center;
+  align-content: center;
 }
 
 .tile,
-.draggable {
-  width: 100px;
+.answer,
+.question {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100px;
-  text-align: center;
-  line-height: 100px;
 }
 
-.tile {
-  background-color: lightgray;
-  border: 2px solid black;
-}
 
-.draggable {
+.answer {
   background-color: orange;
-  cursor: grab;
+  color: black;
 }
 
-.equations {
-  margin: 0;
+.question {
+  background-color: lightgray;
+  color: black;
 }
 
-.setRound {
-  display: inline-block;
-}
-
-.stats {
+.stats, .statsFooter {
   display: inline-block;
   margin-left: 100px;
   margin-right: 100px;
@@ -125,107 +182,133 @@ footer {
 
 @media (max-width: 600px) {
   body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    width: max-content;
-    padding: 0;
-    background: url(assets/Numerazzle.png) no-repeat center center fixed;
-    background-size: cover;
-    user-select: none;
-    overflow: hidden; /* Prevents scrolling */
-  }
-
-  /* hier ist styles fur die main page */
-  .menu {
-    width: 200px;
-    height: 200px;
-    border-radius: 25px;
-    background-color: #bfe9ff;
-    margin-top: 100px;
-  }
-
-  .menu h1 {
-    padding-top: 50px;
-    padding-bottom: 50px;
-  }
-
-  .menu a {
-    color: black;
-    border: solid 2px #191771;
-    font-size: 25px;
-    padding: 10px;
-    border-radius: 25px;
-    text-decoration: none;
-  }
-
-  .menu a:hover {
-    background-color: #191771;
-    color: white;
+    overflow: scroll;
   }
 
   header {
+    padding: 5px 0;
+    display: block;
+  }
+
+  footer {
+    display: block;
+    height: 50px;
     width: 100%;
     text-align: center;
     background-color: #333;
     color: white;
-    padding: 10px 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
+    padding: 5px 0;
+  }
+
+  .tile,
+  .answer,
+  .question {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    width: 80px;
   }
 
   .container {
     display: block;
-    gap: 15px;
-    margin-top: 140px;
+    gap: 20px;
     justify-content: center;
     align-items: center;
+    margin-top: 150px;
   }
-
-  .draggable-container {
+  
+  .answer-container-1,
+  .question-container-1 { 
     display: grid;
+    margin-top: 10px;
     gap: 10px;
+    grid-template-columns: 80px 80px;
+    grid-template-rows: 80px 80px;
+    justify-content: center;
+    align-content: center;
+
+  }
+  
+  .answer-container-2,
+  .question-container-2 {
+    display: none;
+    margin-top: 10px;
+    gap: 10px;
+    grid-template-columns: 80px 80px;
+    grid-template-rows: 80px 80px;
+    justify-content: center;
+    align-content: center;
+  }
+  
+  .question-container-3,
+  .answer-container-3 {
+    display: none;
+    gap: 20px;
+    grid-template-columns: 70px 70px 70px;
+    grid-template-rows: 50px 50px 70px;
+    justify-content: center;
+    align-content: center;
+  }
+  
+  .question-container-4,
+  .answer-container-4 {
+    display: none;
+    gap: 20px;
+    grid-template-columns: 70px 70px 70px;
+    grid-template-rows: 50px 50px 70px;
+    justify-content: center;
+    align-content: center;
+  }
+  
+  .question-container-5,
+  .answer-container-5 {
+    display: none;
+    gap: 5px;
+    grid-template-columns: 80px 80px 80px 80px 80px;
+    grid-template-rows: 60px 60px 60px 60px 150px;
     justify-content: center;
     align-content: center;
   }
 
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(5, 100px);
-    grid-template-rows: repeat(5, 100px);
-    gap: 5px;
-  }
-
-  .tile,
-  .draggable {
-    width: 60px;
-    height: 60px;
-    text-align: center;
-    line-height: 50px;
-  }
-
-  .tile {
-    background-color: lightgray;
-    border: 2px solid black;
-  }
-
-  .draggable {
-    background-color: orange;
-    cursor: grab;
-  }
-
-  .equations {
-    margin: 0;
-  }
-
-  .setRound {
-    display: inline-block;
-  }
-
   .stats {
     display: inline-block;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: -20px;
+  }
+
+  .statsFooter {
+    display: inline-block;
+    margin-left: 25px;
+    margin-right: 25px;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+  .roundEnd {
+    display: none;
+    background-color: black;
+    color: white;
+    margin-top: 200px;
+    width: 300px;
+    height: 300px;
+  }
+  
+  .roundEnd h1 {
+    padding-top: 50px;
+  }
+  
+  .roundEnd h2 {
+    padding: 5px;
+    border: 2px solid white;
+    width: 150px;
+    border-radius: 25px;
+  }
+  
+  .roundEnd h2:hover {
+    color: black;
+    background-color: white;
   }
 }
