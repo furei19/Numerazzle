@@ -53,7 +53,7 @@ function generateEquationRound1() {
     questionElement.setAttribute("data-answer", q.answer);
   });
 
-  remainingTime = 10;
+  remainingTime = 120;
   startCountdown();
 }
 
