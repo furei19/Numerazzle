@@ -14,7 +14,7 @@
       <h1>Numerazzle</h1>
       <div class="stats" id="timer">Time Left: 000 Seconds</div>
       <div class="stats" id="totalScore">Total Score: 00</div>
-      <!--
+      <!-- image output 
       <button onclick="generateEquationRound5()">skip to round 5</button>
       <button onclick="nextSet()">skip to end</button>
       -->
@@ -29,6 +29,9 @@
     <center>
       <div class="container" id="container">
 
+        <!-- image output -->
+        <div id="gridContainer" class="grid-container"></div>
+        <canvas id="imageCanvas" style="display: none;"></canvas>
         <!-- round 1 and 2 -->
         <div class="question-container-1" id="round1Q">
           <p class="question" id="round1q-1-1" onclick="checkAnswer(this)"></p>
@@ -161,6 +164,10 @@
           <p class="answer" id="round5-4-5" onclick="getAnswer(this)"></p>
           <p class="answer" id="round5-5-5" onclick="getAnswer(this)"></p>
         </div>
+      </div>
+      <div>
+        <h3 class="nextRoundButton" id="nextRoundButton" onclick="nextRound()">Next Round</h3>
+        <h3 class="nextGameButton" id="nextGameButton" onclick="nextSet()">Next Set</h3>
       </div>
     </center>
   </div>

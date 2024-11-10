@@ -8,6 +8,8 @@ let lastClickedElement = null;
 let set = 1;
 let totalTotalScore = document.getElementById("totalTotalScore");
 let setScore;
+let gridSize;
+let isPaused = false;
 
 window.onload = generateEquationRound1();
 
@@ -51,12 +53,13 @@ function generateEquationRound1() {
     questionElement.setAttribute("data-answer", q.answer);
   });
 
-  remainingTime = 120;
+  remainingTime = 10;
   startCountdown();
 }
 
 function generateEquationRound2() {
   currentRound = 2;
+  document.getElementById("nextRoundButton").style.display = "none";
   document.getElementById("setRound").textContent = `Round: 2`;
   document.getElementById("round1A").style.display = "none";
   document.getElementById("round1Q").style.display = "none";
@@ -103,6 +106,7 @@ function generateEquationRound2() {
 
 function generateEquationRound3() {
   currentRound = 3;
+  document.getElementById("nextRoundButton").style.display = "none";
   document.getElementById("setRound").textContent = `Round: 3`;
   document.getElementById("round2A").style.display = "none";
   document.getElementById("round2Q").style.display = "none";
@@ -149,6 +153,7 @@ function generateEquationRound3() {
 
 function generateEquationRound4() {
   currentRound = 4;
+  document.getElementById("nextRoundButton").style.display = "none";
   document.getElementById("setRound").textContent = `Round: 4`;
   document.getElementById("round3A").style.display = "none";
   document.getElementById("round3Q").style.display = "none";
@@ -195,6 +200,7 @@ function generateEquationRound4() {
 
 function generateEquationRound5() {
   currentRound = 5;
+  document.getElementById("nextRoundButton").style.display = "none";
   document.getElementById("setRound").textContent = `Round: 5`;
   document.getElementById("round1A").style.display = "none";
   document.getElementById("round1Q").style.display = "none";
@@ -293,20 +299,42 @@ function checkAnswer(element) {
       clickedAnswer.style.display = "none";
       totalScoreCounter.textContent = `Total Score = ${score}`;
       if (answeredQuestion === 4) {
-        document.getElementById("setRound").textContent = `Round: 2`;
-        generateEquationRound2();
+        document.getElementById("round1A").style.display = "none";
+        document.getElementById("round1Q").style.display = "none";
+        document.getElementById("nextRoundButton").style.display = "block";
+        document.getElementById("gridContainer").style.display = "grid";
+        pauseCountdown();
+        createImageGrid();
       } else if (answeredQuestion === 8) {
-        document.getElementById("setRound").textContent = `Round: 3`;
-        generateEquationRound3();
+        document.getElementById("round2A").style.display = "none";
+        document.getElementById("round2Q").style.display = "none";
+        document.getElementById("nextRoundButton").style.display = "block";
+        document.getElementById("gridContainer").style.display = "grid";
+        pauseCountdown();
+        createImageGrid();
       } else if (answeredQuestion === 17) {
-        document.getElementById("setRound").textContent = `Round: 4`;
-        generateEquationRound4();
+        document.getElementById("round3A").style.display = "none";
+        document.getElementById("round3Q").style.display = "none";
+        document.getElementById("nextRoundButton").style.marginTop = "50px";
+        document.getElementById("nextRoundButton").style.display = "block";
+        document.getElementById("gridContainer").style.display = "grid";
+        pauseCountdown();
+        createImageGrid();
       } else if (answeredQuestion === 26) {
-        document.getElementById("setRound").textContent = `Round: 5`;
-        generateEquationRound5();
-        console.log("answered questions", answeredQuestion);
+        document.getElementById("round4A").style.display = "none";
+        document.getElementById("round4Q").style.display = "none";
+        document.getElementById("nextRoundButton").style.display = "block";
+        document.getElementById("gridContainer").style.display = "grid";
+        pauseCountdown();
+        createImageGrid();
       } else if (answeredQuestion === 51) {
-        nextSet();
+        document.getElementById("round5A").style.display = "none";
+        document.getElementById("round5Q").style.display = "none";
+        document.getElementById("nextGameButton").style.display = "block";
+        document.getElementById("gridContainer").style.display = "grid";
+        console.log("got here");
+        pauseCountdown();
+        createImageGrid();
       }
     } else {
       alert("Incorrect answer, score -1");
@@ -324,13 +352,20 @@ function startCountdown() {
   const timerElement = document.getElementById("timer");
   clearInterval(countdownTimer);
   countdownTimer = setInterval(() => {
-    remainingTime--;
-    timerElement.textContent = `Time Left: ${remainingTime} seconds`;
-    if (remainingTime <= 0) {
-      clearInterval(countdownTimer);
-      endRound();
+    if (!isPaused) {
+      remainingTime--;
+      timerElement.textContent = `Time Left: ${remainingTime} seconds`;
+      if (remainingTime <= 0) {
+        clearInterval(countdownTimer);
+        document.getElementById("gridContainer").style.display = "none";
+        endRound();
+      }
     }
   }, 1000);
+}
+
+function pauseCountdown() {
+  isPaused = !isPaused; 
 }
 
 function nextSet() {
@@ -354,6 +389,110 @@ function endRound() {
   }
 }
 
+function nextRound() {
+  if (currentRound === 1) {
+    document.getElementById("round1A").style.display = "none";
+    document.getElementById("round1Q").style.display = "none";
+    document.getElementById("gridContainer").style.display = "none";
+    pauseCountdown();
+    generateEquationRound2();
+  } else if (currentRound === 2) {
+    document.getElementById("round2A").style.display = "none";
+    document.getElementById("round2Q").style.display = "none";
+    document.getElementById("gridContainer").style.display = "none";
+    pauseCountdown();
+    generateEquationRound3();
+  } else if (currentRound === 3) {
+    document.getElementById("round3A").style.display = "none";
+    document.getElementById("round3Q").style.display = "none";
+    document.getElementById("gridContainer").style.display = "none";
+    pauseCountdown();
+    generateEquationRound4();
+  } else if (currentRound === 4) {
+    document.getElementById("round4A").style.display = "none";
+    document.getElementById("round4Q").style.display = "none";
+    answeredQuestion = 26;
+    pauseCountdown();
+    generateEquationRound5();
+  } else if (currentRound === 5) {
+    document.getElementById("round5A").style.display = "none";
+    document.getElementById("round5Q").style.display = "none";
+    document.getElementById("roundEnd").style.display = "block";
+    totalTotalScore.textContent = `Total Score = ${setScore}`;
+  }
+}
+
 function nextGame() {
   location.reload(true);
+}
+
+function getRandomImage() {
+  const images = ["/images/math1.png", "/images/math2.png", "/images/math3.png", "/images/math4.png", "/images/math5.png", "/images/math6.png"];
+  return images[Math.floor(Math.random() * images.length)];
+}
+
+function createImageGrid() {
+  let gridSize;
+  if (currentRound === 1 || currentRound === 2) {
+    gridSize = 2;
+  } else if (currentRound === 3 || currentRound === 4) {
+    gridSize = 3;
+  } else if (currentRound === 5) {
+    gridSize = 5;
+  }
+
+  const gridContainer = document.getElementById("gridContainer");
+  const selectedImage = getRandomImage();
+
+  console.log(selectedImage);
+
+  // Define grid layout based on selected size
+  gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 100px)`;
+  gridContainer.innerHTML = ''; // Clear any previous items
+
+  const img = new Image();
+  img.src = selectedImage;
+
+  img.onload = () => {
+    // Scale the canvas to match the total grid size based on gridSize
+    const totalCanvasSize = gridSize * 100; // e.g., 200px for 2x2, 300px for 3x3, etc.
+    const canvas = document.getElementById("imageCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = totalCanvasSize;
+    canvas.height = totalCanvasSize;
+
+    // Draw the image scaled to fit the grid entirely, maintaining high resolution
+    ctx.drawImage(img, 0, 0, totalCanvasSize, totalCanvasSize);
+
+    // Calculate slice dimensions based on the scaled grid size
+    const sliceWidth = totalCanvasSize / gridSize;
+    const sliceHeight = totalCanvasSize / gridSize;
+
+    // Insert each sliced image into a grid cell
+    for (let row = 0; row < gridSize; row++) {
+      for (let col = 0; col < gridSize; col++) {
+        // Create a canvas for each grid cell slice
+        const sliceCanvas = document.createElement("canvas");
+        const sliceCtx = sliceCanvas.getContext("2d");
+
+        sliceCanvas.width = 100;
+        sliceCanvas.height = 100;
+
+        // Draw the scaled slice onto the 100x100 canvas
+        sliceCtx.drawImage(
+          canvas,
+          col * sliceWidth, row * sliceHeight, sliceWidth, sliceHeight,
+          0, 0, 100, 100
+        );
+
+        // Convert the slice canvas to an image and add it to the grid cell
+        const imgSlice = new Image();
+        imgSlice.src = sliceCanvas.toDataURL();
+        const gridItem = document.createElement("div");
+        gridItem.classList.add("grid-item");
+        gridItem.appendChild(imgSlice);
+        gridContainer.appendChild(gridItem);
+      }
+    }
+  };
 }
