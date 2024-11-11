@@ -427,7 +427,7 @@ function nextGame() {
 }
 
 function getRandomImage() {
-  const images = ["/images/math1.png", "/images/math2.png", "/images/math3.png", "/images/math4.png", "/images/math5.png", "/images/math6.png"];
+  const images = ["images/math1.png", "images/math2.png", "images/math3.png", "images/math4.png", "images/math5.png", "images/math6.png"];
   return images[Math.floor(Math.random() * images.length)];
 }
 
