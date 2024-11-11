@@ -411,6 +411,7 @@ function nextRound() {
   } else if (currentRound === 4) {
     document.getElementById("round4A").style.display = "none";
     document.getElementById("round4Q").style.display = "none";
+    document.getElementById("gridContainer").style.display = "none";
     answeredQuestion = 26;
     pauseCountdown();
     generateEquationRound5();
