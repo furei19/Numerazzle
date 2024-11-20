@@ -54,7 +54,7 @@ function generateEquationRound1() {
     questionElement.setAttribute("data-answer", q.answer);
   });
 
-  remainingTime = 10;
+  remainingTime = 120;
   startCountdown();
 }
 
@@ -101,7 +101,7 @@ function generateEquationRound2() {
     questionElement.setAttribute("data-answer", q.answer);
   });
 
-  remainingTime = 1;
+  remainingTime = 120;
   startCountdown();
 }
 
@@ -148,7 +148,7 @@ function generateEquationRound3() {
     questionElement.setAttribute("data-answer", q.answer);
   });
 
-  remainingTime = 1;
+  remainingTime = 360;
   startCountdown();
 }
 
@@ -195,7 +195,7 @@ function generateEquationRound4() {
     questionElement.setAttribute("data-answer", q.answer);
   });
 
-  remainingTime = 1;
+  remainingTime = 360;
   startCountdown();
 }
 
@@ -266,7 +266,7 @@ function generateEquationRound5() {
     questionElement.setAttribute("data-answer", q.answer);
   });
 
-  remainingTime = 10;
+  remainingTime = 900;
   startCountdown();
 }
 
