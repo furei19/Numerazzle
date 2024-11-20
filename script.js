@@ -7,9 +7,10 @@ let answeredQuestion = 0;
 let lastClickedElement = null;
 let set = 1;
 let totalTotalScore = document.getElementById("totalTotalScore");
-let setScore;
 let gridSize;
 let isPaused = false;
+let gridContainer = document.getElementById("gridContainer");
+let imageCanvas = document.getElementById("imageCanvas");
 
 window.onload = generateEquationRound1();
 
@@ -53,7 +54,7 @@ function generateEquationRound1() {
     questionElement.setAttribute("data-answer", q.answer);
   });
 
-  remainingTime = 120;
+  remainingTime = 10;
   startCountdown();
 }
 
@@ -100,7 +101,7 @@ function generateEquationRound2() {
     questionElement.setAttribute("data-answer", q.answer);
   });
 
-  remainingTime = 120;
+  remainingTime = 1;
   startCountdown();
 }
 
@@ -147,7 +148,7 @@ function generateEquationRound3() {
     questionElement.setAttribute("data-answer", q.answer);
   });
 
-  remainingTime = 360;
+  remainingTime = 1;
   startCountdown();
 }
 
@@ -194,7 +195,7 @@ function generateEquationRound4() {
     questionElement.setAttribute("data-answer", q.answer);
   });
 
-  remainingTime = 360;
+  remainingTime = 1;
   startCountdown();
 }
 
@@ -265,7 +266,7 @@ function generateEquationRound5() {
     questionElement.setAttribute("data-answer", q.answer);
   });
 
-  remainingTime = 900;
+  remainingTime = 10;
   startCountdown();
 }
 
@@ -302,14 +303,14 @@ function checkAnswer(element) {
         document.getElementById("round1A").style.display = "none";
         document.getElementById("round1Q").style.display = "none";
         document.getElementById("nextRoundButton").style.display = "block";
-        document.getElementById("gridContainer").style.display = "grid";
+        gridContainer.style.display = "grid";
         pauseCountdown();
         createImageGrid();
       } else if (answeredQuestion === 8) {
         document.getElementById("round2A").style.display = "none";
         document.getElementById("round2Q").style.display = "none";
         document.getElementById("nextRoundButton").style.display = "block";
-        document.getElementById("gridContainer").style.display = "grid";
+        gridContainer.style.display = "grid";
         pauseCountdown();
         createImageGrid();
       } else if (answeredQuestion === 17) {
@@ -317,21 +318,24 @@ function checkAnswer(element) {
         document.getElementById("round3Q").style.display = "none";
         document.getElementById("nextRoundButton").style.marginTop = "50px";
         document.getElementById("nextRoundButton").style.display = "block";
-        document.getElementById("gridContainer").style.display = "grid";
+        gridContainer.style.display = "grid";
         pauseCountdown();
         createImageGrid();
       } else if (answeredQuestion === 26) {
         document.getElementById("round4A").style.display = "none";
         document.getElementById("round4Q").style.display = "none";
         document.getElementById("nextRoundButton").style.display = "block";
-        document.getElementById("gridContainer").style.display = "grid";
+        gridContainer.style.display = "grid";
         pauseCountdown();
         createImageGrid();
       } else if (answeredQuestion === 51) {
         document.getElementById("round5A").style.display = "none";
         document.getElementById("round5Q").style.display = "none";
         document.getElementById("nextGameButton").style.display = "block";
-        document.getElementById("gridContainer").style.display = "grid";
+        gridContainer.style.marginTop = "-50px";
+        imageCanvas.style.margin = "-2px";
+        gridContainer.style.gap = "0px";
+        gridContainer.style.display = "grid";
         console.log("got here");
         pauseCountdown();
         createImageGrid();
@@ -357,7 +361,6 @@ function startCountdown() {
       timerElement.textContent = `Time Left: ${remainingTime} seconds`;
       if (remainingTime <= 0) {
         clearInterval(countdownTimer);
-        document.getElementById("gridContainer").style.display = "none";
         endRound();
       }
     }
@@ -371,55 +374,82 @@ function pauseCountdown() {
 function nextSet() {
   document.getElementById("round5A").style.display = "none";
   document.getElementById("round5Q").style.display = "none";
+  document.getElementById("nextGameButton").style.display = "none";
   document.getElementById("roundEnd").style.display = "block";
-  totalTotalScore.textContent = `Total Score = ${setScore}`;
+  gridContainer.style.display = "none";
+  
+  totalTotalScore.textContent = `Total Score = ${score}`;
 }
 
 function endRound() {
   if (currentRound === 1) {
+    answeredQuestion = 4;
+    gridContainer.style.display = "none";
     generateEquationRound2();
+    console.log("1");
   } else if (currentRound === 2) {
+    answeredQuestion = 8;
+    gridContainer.style.display = "none";
     generateEquationRound3();
+    console.log("2");
   } else if (currentRound === 3) {
+    answeredQuestion = 17;
+    gridContainer.style.display = "none";
     generateEquationRound4();
+    console.log("3");
   } else if (currentRound === 4) {
+    answeredQuestion = 26;
+    gridContainer.style.display = "none";
     generateEquationRound5();
+    console.log("4");
   } else if (currentRound === 5) {
-    nextSet();
+    console.log("5");
+    answeredQuestion = 51;
+    createImageGrid();
+    gridContainer.style.display = "grid";
+    gridContainer.style.marginTop = "-50px";
+    gridContainer.style.gap = "0px";
+    gridContainer.style.display = "grid";
+    document.getElementById("round5A").style.display = "none";
+    document.getElementById("round5Q").style.display = "none";
+    document.getElementById("nextGameButton").style.display = "block";
   }
 }
 
 function nextRound() {
   if (currentRound === 1) {
+    answeredQuestion = 4;
     document.getElementById("round1A").style.display = "none";
     document.getElementById("round1Q").style.display = "none";
-    document.getElementById("gridContainer").style.display = "none";
+    gridContainer.style.display = "none";
     pauseCountdown();
     generateEquationRound2();
   } else if (currentRound === 2) {
+    answeredQuestion = 8;
     document.getElementById("round2A").style.display = "none";
     document.getElementById("round2Q").style.display = "none";
-    document.getElementById("gridContainer").style.display = "none";
+    gridContainer.style.display = "none";
     pauseCountdown();
     generateEquationRound3();
   } else if (currentRound === 3) {
+    answeredQuestion = 17;
     document.getElementById("round3A").style.display = "none";
     document.getElementById("round3Q").style.display = "none";
-    document.getElementById("gridContainer").style.display = "none";
+    gridContainer.style.display = "none";
     pauseCountdown();
     generateEquationRound4();
   } else if (currentRound === 4) {
+    answeredQuestion = 26;
     document.getElementById("round4A").style.display = "none";
     document.getElementById("round4Q").style.display = "none";
-    document.getElementById("gridContainer").style.display = "none";
-    answeredQuestion = 26;
+    gridContainer.style.display = "none";
     pauseCountdown();
     generateEquationRound5();
   } else if (currentRound === 5) {
     document.getElementById("round5A").style.display = "none";
     document.getElementById("round5Q").style.display = "none";
     document.getElementById("roundEnd").style.display = "block";
-    totalTotalScore.textContent = `Total Score = ${setScore}`;
+    totalTotalScore.textContent = `Total Score = ${score}`;
   }
 }
 
@@ -428,7 +458,7 @@ function nextGame() {
 }
 
 function getRandomImage() {
-  const images = ["images/math1.png", "images/math2.png", "images/math3.png", "images/math4.png", "images/math5.png", "images/math6.png"];
+  const images = ["/images/math1.png", "/images/math2.png", "/images/math3.png", "/images/math4.png", "/images/math5.png", "/images/math6.png"];
   return images[Math.floor(Math.random() * images.length)];
 }
 
@@ -442,7 +472,6 @@ function createImageGrid() {
     gridSize = 5;
   }
 
-  const gridContainer = document.getElementById("gridContainer");
   const selectedImage = getRandomImage();
 
   console.log(selectedImage);
