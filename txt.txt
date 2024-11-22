@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation on Load</title>
+  <style>
+    /* Define keyframes for transform animation */
+    @keyframes slideIn {
+      from {
+        transform: translateY(-100px); /* Start off-screen above */
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0); /* Move into position */
+        opacity: 1;
+      }
+    }
+
+    /* Apply animation to element */
+    .animated-box {
+      width: 100px;
+      height: 100px;
+      background-color: #4CAF50;
+      animation: slideIn 1s ease-out forwards; /* Play on load */
+    }
+  </style>
+</head>
+<body>
+  <div class="animated-box"></div>
+</body>
+</html>
