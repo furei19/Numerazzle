@@ -3,7 +3,7 @@ html {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Comic Neue", cursive;
   font-style: normal;
   background: url(assets/Numerazzle.png) no-repeat center center fixed;
   background-size: cover;
