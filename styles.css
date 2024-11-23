@@ -312,7 +312,7 @@ footer {
   }
 
   body {
-    overflow-y: hidden;
+    overflow-y: scroll;
     align-items: center;
   }
 
@@ -364,7 +364,6 @@ footer {
 
   .container {
     display: block;
-    overflow-y: scroll;
     gap: 0px;
     justify-content: center;
     align-items: center;
