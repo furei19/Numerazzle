@@ -19,19 +19,14 @@
       <button onclick="nextSet()">skip to end</button>
       -->
     </header>
+    <div class="spacerHeader"></div>
     <center>
       <div class="roundEnd" id="roundEnd">
         <h1>GAME OVER</h1>
         <h1 class="stats" id="totalTotalScore">Total Score: 00</h1>
         <h2 onclick="nextGame()">Next Set</h2>
       </div>
-    </center>
-    <center>
       <div class="container" id="container">
-
-        <!-- image output -->
-        <div id="gridContainer" class="grid-container"></div>
-        <canvas id="imageCanvas" style="display: none;"></canvas>
         <!-- round 1 and 2 -->
         <div class="question-container-1" id="round1Q">
           <p class="question" id="round1q-1-1" onclick="checkAnswer(this)"></p>
@@ -165,17 +160,26 @@
           <p class="answer" id="round5-5-5" onclick="getAnswer(this)"></p>
         </div>
       </div>
+    </center>
+    <center>
+      <!-- image output -->
+      <div id="gridContainer" class="grid-container"></div>
+      <canvas id="imageCanvas" style="display: none;"></canvas>
+
       <div id="triviaBox" class="triviaBox">
         <p id="name"></p>
         <p id="trivia">
         </p>
       </div>
+
       <div>
         <h3 class="nextRoundButton" id="nextRoundButton" onclick="nextRound()">Next Round</h3>
         <h3 class="nextGameButton" id="nextGameButton" onclick="nextSet()">Done</h3>
       </div>
     </center>
+
   </div>
+  <div class="spacerFooter"></div>
   <footer id="footer">
     <div class="statsFooter" id="setRound">Round 0</div>
   </footer>

@@ -3,7 +3,7 @@ html {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  font-family: cursive;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   background: url(assets/Numerazzle.png) no-repeat center center fixed;
   background-size: cover;
   user-select: none;
@@ -111,7 +111,7 @@ header {
   margin-top: 0px;
   display: none;
   gap: 5px;
-
+  justify-content: center;
 }
 
 .grid-item img {
@@ -127,7 +127,7 @@ header {
   display: none;
   margin-top: 20px;
   width: 400px;
-  height: 160px;
+  height: auto;
   padding: 10px;
   background-color: white;
   border: 2px solid white;
@@ -146,7 +146,6 @@ footer {
   text-align: center;
   background-color: #333;
   color: white;
-  padding: 10px 0;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -154,12 +153,19 @@ footer {
   margin: 0;
 }
 
+.spacerHeader {
+  height: 180px;
+}
+
+.spacerFooter {
+  height: 50px;
+}
+
 .container {
-  display: flex; /*set to flex*/
+  display: flex;
   gap: 50px;
   justify-content: center;
   align-items: center;
-  margin-top: 200px;
 }
 
 .answer-container-1,
@@ -268,13 +274,17 @@ footer {
   }
 }
 
-
-
-
 @media (max-width: 600px) {
   body {
     overflow: scroll;
     align-items: center;
+  }
+  .spacerHeader {
+    height: 50px;
+  }
+  
+  .spacerFooter {
+    height: 50px;
   }
 
   header {
@@ -303,6 +313,7 @@ footer {
   #gridContainer {
     display: none;
     gap: 5px;
+    justify-content: center;
   }
   
   .grid-item img {
@@ -310,6 +321,17 @@ footer {
     width: 100px;
     height: 100px;
     object-fit: cover;
+  }
+
+  .triviaBox {
+    display: none;
+    margin-top: 20px;
+    width: 300px;
+    height: auto;
+  }
+  
+  .triviaBox p {
+    margin-top: -8px;
   }
 
   .tile,
