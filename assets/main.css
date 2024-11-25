@@ -1,0 +1,113 @@
+body,
+html {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Comic Neue", cursive;
+  font-style: normal;
+  background: url(assets/Numerazzle.png) no-repeat center center fixed;
+  background-size: cover;
+  user-select: none;
+  overflow: hidden;
+}
+
+/* hier ist styles fur die main page */
+.numerazzleHeader {
+    width: 650px;
+    margin-bottom: -150px;
+    margin-top: -70px;
+}
+
+.mechanicsHeader {
+    width: 450px;
+    margin-top: 20px;
+    margin-bottom: -100px;
+}
+  
+.brain {
+    width: 550px;
+    margin-top: -60px;
+}
+
+.menu {
+    width: 900px;
+    height: 600px;
+    border-radius: 25px;
+    margin-top: 50px;
+}
+
+.menu a {
+    color: white;
+    border: solid 2px #6664d4;
+    background-color: #6664d4;
+    font-size: 25px;
+    padding: 10px;
+    border-radius: 25px 5px 25px 5px;
+    text-decoration: none;
+    display: block;
+    width: 200px;
+    margin-top: 10px;
+}
+
+.menu a:hover {
+    background-color: #9796e3;
+    color: white;
+}
+
+.button {
+    color: white;
+    border: solid 2px #6664d4;
+    background-color: #6664d4;
+    font-size: 25px;
+    padding: 10px;
+    border-radius: 25px 5px 25px 5px;
+    text-decoration: none;
+    display: block;
+    width: 200px;
+    margin-top: -120px;
+}
+
+.button:hover {
+    background-color: #9796e3;
+    color: white;
+}
+
+.mainContent {
+    width: 350px;
+    height: 330px;
+    background-color: #6664d4;
+    color: white;
+    opacity: 80%;
+    padding-right: 15px;
+    justify-content: left;
+    margin: auto;
+}
+
+.mainContent ul li {
+    margin-top: 10px;
+}
+  
+@media (max-width: 600px) {
+    .numerazzleHeader {
+        width: 390px;
+        margin-bottom: -150px;
+        margin-top: -70px;
+    }
+
+    .brain {
+        width: 550px;
+        margin-top: 30px;
+    }
+
+    .menu {
+        width: auto;
+        height: 600px;
+        border-radius: 25px;
+        margin-top: 50px;
+    }
+
+    .mechanicsHeader {
+        width: 300px;
+        margin-top: 20px;
+    }
+}  
