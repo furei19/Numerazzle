@@ -10,42 +10,6 @@ html {
   user-select: none;
 }
 
-/* hier ist styles fur die main page */
-.numerazzleHeader {
-  width: 650px;
-  margin-bottom: -150px;
-  margin-top: -70px;
-}
-
-.brain {
-  width: 550px;
-  margin-top: -60px;
-}
-
-.menu {
-  width: 900px;
-  height: 600px;
-  border-radius: 25px;
-  margin-top: 50px;
-}
-
-.menu a {
-  color: white;
-  border: solid 2px #6664d4;
-  background-color: #6664d4;
-  font-size: 25px;
-  padding: 10px;
-  border-radius: 25px 5px 25px 5px;
-  text-decoration: none;
-  display: block;
-  width: 200px;
-  margin-top: 10px;
-}
-
-.menu a:hover {
-  background-color: #9796e3;
-  color: white;
-}
 
 header {
   display: block;
@@ -315,6 +279,7 @@ footer {
     overflow-y: scroll;
     align-items: center;
   }
+
 
   header {
     padding: 5px 0;
