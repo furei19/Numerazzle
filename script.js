@@ -464,7 +464,7 @@ function nextGame() {
 }
 
 function getRandomImage() {
-  const images = ["/images/math1.png", "/images/math2.png", "/images/math3.png", "/images/math4.png", "/images/math5.png", "/images/math6.png"];
+  const images = ["images/math1.png", "images/math2.png", "images/math3.png", "images/math4.png", "images/math5.png", "images/math6.png"];
   return images[Math.floor(Math.random() * images.length)];
 }
 
@@ -534,22 +534,22 @@ function createImageGrid() {
   const trivia = document.getElementById("trivia");
   triviaBox.style.display = "block";
   console.log("Got here");
-  if (selectedImage === "/images/math1.png" ) {
+  if (selectedImage === "images/math1.png" ) {
     name.textContent = "Galileo Galilei";
     trivia.textContent = "Galileo was never married, but he did start a family So according to this tradition, Galileo never tied the knot. That said, the academic was associated with a woman named Marina Gamba, with whom he raised three children: Virginia (born in 1600), Livia (born in 1601), and Vincenzo (born in 1606).";
-  } else if (selectedImage === "/images/math2.png" ) {
+  } else if (selectedImage === "images/math2.png" ) {
     name.textContent = "Isaac Newton";
     trivia.textContent = "Newton did witness an apple falling from a tree one day and this got him thinking about what actually caused the apple to fall to the ground. Newton later developed his theory of Gravity, believing that Earth has a force that pulls objects down, which prevents objects from aimlessly floating around.";
-  } else if (selectedImage === "/images/math3.png" ) {
+  } else if (selectedImage === "images/math3.png" ) {
     name.textContent = "Daniel Bernoulli";
     trivia.textContent = "He lived for his work; he never married and had no children. He considered marriage when he was younger, but the woman in question turned out to be very mean with money, which he found off-putting. Bernoulli respected simplicity of lifestyle and frugality, but not meanness.";
-  } else if (selectedImage === "/images/math4.png" ) {
+  } else if (selectedImage === "images/math4.png" ) {
     name.textContent = "Archemedes";
     trivia.textContent = "He was in the service of King Hiero II of Syracuse. At that time, he developed many inventions. Archimedes made out a pulley system designed to help the sailors move objects up and down that are weighty.";
-  } else if (selectedImage === "/images/math5.png" ) {
+  } else if (selectedImage === "images/math5.png" ) {
     name.textContent = "Euclid";
     trivia.textContent = "He wrote the 13 Elements. Because of his work in the field of geometry he is called the father of geometry. Most geometry is so named Euclidian Geometry because of his thirteen Elements which summarized most of the geometry during his time. By the 1700's the Elements was the text book.";
-  } else if (selectedImage === "/images/math6.png" ) {
+  } else if (selectedImage === "images/math6.png" ) {
     name.textContent = "Pythagoras";
     trivia.textContent = "One of the few Pythagoras facts that can be nailed down with any certainty is that he traveled extensively. He likely spent time in Babylon and Egypt as a child or a young man.";
   }
