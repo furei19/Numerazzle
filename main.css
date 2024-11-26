@@ -93,7 +93,7 @@ html {
     .numerazzleHeader {
         width: 350px;
         margin-bottom: -120px;
-        margin-top: 20px;
+        margin-top: -10px;
     }
 
     .brain {
