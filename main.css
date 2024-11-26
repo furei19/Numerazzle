@@ -14,7 +14,6 @@ html {
 /* hier ist styles fur die main page */
 .numerazzleHeader {
     width: 650px;
-    display: block;
     margin-bottom: -150px;
     margin-top: -70px;
 }
@@ -22,17 +21,16 @@ html {
 .mechanicsHeader {
     width: 450px;
     margin-top: 20px;
-    margin-bottom: -130px;
+    margin-bottom: -100px;
 }
   
 .brain {
-    display: block;
     width: 250px;
     margin-top: -60px;
 }
 
 .menu {
-    width: auto;
+    width:900px;
     height: 600px;
     border-radius: 25px;
     margin-top: 50px;
@@ -89,9 +87,9 @@ html {
     margin-top: 10px;
 }
   
-@media (max-width: 600px) {
+@media (max-width: 800px) {
     .numerazzleHeader {
-        width: 350px;
+        width: 390px;
         margin-bottom: -150px;
         margin-top: -70px;
     }
@@ -102,6 +100,7 @@ html {
     }
 
     .menu {
+        width:90%;
         height: 600px;
         border-radius: 25px;
         margin-top: 50px;
