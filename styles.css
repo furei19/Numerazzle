@@ -5,8 +5,7 @@ html {
   min-height: 100vh;
   font-family: "Comic Neue", cursive;
   font-style: normal;
-  background: url(assets/Numerazzle.png) no-repeat center center fixed;
-  background-size: cover;
+  background-color: #191771;
   user-select: none;
 }
 
